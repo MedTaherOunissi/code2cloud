@@ -24,7 +24,19 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+       - name: Build Docker image
+        run: docker build -t code2cloud_nodejs .
+         - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Push Docker image to registry
+        run: 
+
+          docker tag code2cloud_nodejs${{ secrets.DOCKER_USERNAME }}/code2cloud_nodejs:latest
+          docker push ${{ secrets.DOCKER_PASSWORD }}/code2cloud_nodejs:latest
       # Runs a single command using the runners shell
       - name: telchargi code 3al machine
         run: echo Hello, world!
